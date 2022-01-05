@@ -2,10 +2,10 @@ body {
     font-size: 20px;
     font-family: 'Times New Roman', Times, serif;
     background-color: black;
-    color: turquoise;
+    color: teal;
   }
   
   h1 {
-    background-color: violet;
+    background-color: purple;
     padding: 1em;
   }
