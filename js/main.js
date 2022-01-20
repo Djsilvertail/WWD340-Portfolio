@@ -1,37 +1,70 @@
 //Exercise Two
-const btn = document.getElementById('button');
+//const btn = document.getElementById('button');
 
-const rainbow = ['red','orange','yellow','green','blue','rebeccapurple','violet'];
+//const rainbow = ['red','orange','yellow','green','blue','rebeccapurple','violet'];
 
-function change() {      
+/*function change() {      
     document.body.style.background = rainbow[Math.floor(7*Math.random())];
 }
 btn.addEventListener('click', change);
-
+*/
 //Quiz Ninja
 // Set the questions
-const quiz = new Map([
-    ["What is Superman's real name?","Clark Kent"],
-    ["What is Wonderwoman's real name?","Dianna Prince"],
-    ["What is Batman's real name?","Bruce Wayne"]
-  ]);
+const quiz = [
+  { name: "Superman",realName: "Clark Kent" },
+  { name: "Wonderwoman",realName: "Dianna Prince" },
+  { name: "Batman",realName: "Bruce Wayne" },
+];
 
- // initialize score
-let score = 0;
+// View Object
+const view = {
+score: document.querySelector('#score strong'),
+question: document.getElementById('question'),
+result: document.getElementById('result'),
+info: document.getElementById('info'),
+render(target,content,attributes) {
+for(const key in attributes) {
+target.setAttribute(key, attributes[key]);
+}
+target.innerHTML = content;
+}
+};
 
-for(const [question,answer] of quiz.entries()){
+// Game Object
+const game = {
+start(quiz){
+this.score = 0;
+this.questions = [...quiz];
+// main game loop
+for(const question of this.questions){
+this.question = question;
+this.ask();
+}
+// end of main game loop
+this.gameOver();
+},
+ask(){
+const question = `What is ${this.question.name}'s real name?`;
+view.render(view.question,question);
+const response =  prompt(question);
+this.check(response);
+},
+check(response){
+const answer = this.question.realName;
+if(response === answer){
+view.render(view.result,'Correct!',{'class':'correct'});
+alert('Correct!');
+this.score++;
+view.render(view.score,this.score);
+} else {
+view.render(view.result,`Wrong! The correct answer was ${answer}`,{'class':'wrong'});
+alert(`Wrong! The correct answer was ${answer}`);
+}
+},
 
-  // get answer from user
-  const response = prompt(question);
-  // check if answer is correct
-  if(response === answer){
-    alert('Correct!');
-    // increase score by 1
-    score++;
-  } else {
-    alert(`Wrong! The correct answer was ${answer}`);
-  }
+gameOver(){
+view.render(view.info,`Game Over, you scored ${this.score} point${this.score !== 1 ? 's' : ''}`);
+}
 }
 
-// At the end of the game, report the player's score
-alert(`Game Over, you scored ${score} point${score > 1 ? 's' : ''}`);
+game.start(quiz);
