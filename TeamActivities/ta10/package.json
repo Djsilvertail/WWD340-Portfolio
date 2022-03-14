@@ -1,0 +1,12 @@
+{
+  "name": "ta10",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ta10.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server --port=8080 --entry-file=ta10.html"
+  },
+  "author": "",
+  "license": "ISC"
+}
